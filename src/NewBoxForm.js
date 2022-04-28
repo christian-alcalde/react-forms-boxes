@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 
-function NewBoxForm({ addBox, removeBox }) {
-  const initialState = { height: "", width: "", backgroundColor: "" };
-  const [formData, setFormData] = useState(initialState);
+/** Form for creating a new box.
+ * Has state for height, width, and backgroundColor of the box.
+ * On submission, sends { height, width, and backgroundColor } to
+ * addBox function received from the parent.
+ */
+function NewBoxForm({ addBox }) {
+  const INITIAL_STATE = { height: "", width: "", backgroundColor: "" };
+  const [formData, setFormData] = useState(INITIAL_STATE);
 
+  /** Update local state with current state of input element */
   function handleChange(evt) {
     const { name, value } = evt.target;
     setFormData((fData) => ({
@@ -12,34 +18,37 @@ function NewBoxForm({ addBox, removeBox }) {
     }));
   }
 
+  /** sends { height, width, and backgroundColor } to parent and
+   * clears form after submission
+   */
   function handleSubmit(evt) {
     evt.preventDefault();
-    console.log("getting in here");
     addBox(formData);
-    setFormData(initialState);
+    setFormData(INITIAL_STATE);
   }
 
+  /** renders the NewBoxForm */
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="height-input">Height:</label>
+      <label htmlFor="height">Height:</label>
       <input
-        id="height-input"
+        id="height"
         name="height"
         value={formData.height}
         onChange={handleChange}
       ></input>
 
-      <label htmlFor="width-input">Width:</label>
+      <label htmlFor="width">Width:</label>
       <input
-        id="width-input"
+        id="width"
         name="width"
         value={formData.width}
         onChange={handleChange}
       ></input>
 
-      <label htmlFor="backgroundColor-input">background color:</label>
+      <label htmlFor="backgroundColor">background color:</label>
       <input
-        id="backgroundColor-input"
+        id="backgroundColor"
         name="backgroundColor"
         value={formData.backgroundColor}
         onChange={handleChange}
